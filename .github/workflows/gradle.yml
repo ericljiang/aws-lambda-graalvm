@@ -27,3 +27,15 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./build/docs/javadoc
+
+  package:
+    if: ${{ github.ref == 'refs/heads/publish-package' }}
+
+    needs: [build, javadoc]
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Publish to Github Packages
+      run: ./gradlew publish
