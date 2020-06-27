@@ -19,6 +19,10 @@ plugins {
     id 'maven-publish'
 }
 
+group 'me.ericjiang'
+version '0.1.0-SNAPSHOT'
+
+// only for use by Github Actions
 publishing {
     repositories {
         maven {
