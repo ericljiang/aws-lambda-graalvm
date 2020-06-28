@@ -15,6 +15,21 @@ plugins {
     id 'jacoco'
 
     id 'checkstyle'
+    
+    id 'maven-publish'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 repositories {
