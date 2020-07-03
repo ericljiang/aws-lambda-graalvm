@@ -15,7 +15,7 @@ plugins {
     id 'jacoco'
 
     id 'checkstyle'
-    
+
     id 'maven-publish'
 }
 
@@ -38,16 +38,20 @@ repositories {
     jcenter()
 }
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 dependencies {
+    api 'com.amazonaws:aws-lambda-java-core:1.2.0'
+    api 'org.immutables:gson:2.8.2'
+    api 'org.immutables:value-annotations:2.8.2'
+
     annotationProcessor 'org.immutables:value:2.8.2'
     annotationProcessor 'org.projectlombok:lombok:1.18.10'
 
-    compileOnly 'org.immutables:gson:2.8.2'
-    compileOnly 'org.immutables:value-annotations:2.8.2'
     compileOnly 'org.projectlombok:lombok:1.18.10'
 
     // This dependency is found on compile classpath of this component and consumers.
-    implementation 'com.amazonaws:aws-lambda-java-core:1.2.0'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.slf4j:slf4j-api:1.7.28'
     implementation 'org.slf4j:slf4j-simple:1.7.28'

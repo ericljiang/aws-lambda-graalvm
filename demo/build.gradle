@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.palantir.graal' version '0.6.0'
+}
+
+repositories {
+    jcenter()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+mainClassName = 'me.ericjiang.aws.lambda.graalvm.demo.Main'
+
+dependencies {
+    annotationProcessor 'org.immutables:value:2.8.2'
+    implementation project(':')
+}
+
+graal {
+    mainClass project.mainClassName
+    outputName "$buildDir/$libsDirName/runtime"
+    option '--no-fallback'
+    option '--enable-http'
+    option '-Djava.net.preferIPv4Stack=true'
+    option '-H:+ReportExceptionStackTraces'
+}
+
+// Archive the generated binary and the bootstrap file to invoke it
+task packageLambda(type: Zip) {
+    from nativeImage
+    from processResources {
+        include 'bootstrap'
+    }
+}
+
+// Compile and package runtime in a Docker container for local testing
+// Outputs to build/distributions/demo.zip
+task buildDocker(type: Exec) {
+    dependsOn classes
+    commandLine './buildDocker.sh'
+}

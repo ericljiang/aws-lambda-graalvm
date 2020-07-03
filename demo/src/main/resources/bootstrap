@@ -1,0 +1,5 @@
+#!/bin/sh
+echo "Bootstrapping custom runtime..."
+rootdir="${LAMBDA_TASK_ROOT:-.}"
+cd $rootdir
+./runtime
