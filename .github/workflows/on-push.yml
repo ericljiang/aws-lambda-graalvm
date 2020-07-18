@@ -17,3 +17,5 @@ jobs:
       run: ./gradlew build
     - name: Build demo with Gradle
       run: ./gradlew :demo:packageLambda
+    - name: Invoke demo function locally
+      run: ./gradlew :demo:localInvoke
