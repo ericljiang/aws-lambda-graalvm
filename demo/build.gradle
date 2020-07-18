@@ -41,3 +41,22 @@ task buildDocker(type: Exec) {
     dependsOn classes
     commandLine './buildDocker.sh'
 }
+
+task localInvoke {
+    doLast {
+        def file = new File(getTemporaryDir(), "out.json")
+        def event = '{"message": "hello world"}'
+        def command = "echo '${event}' | sam local invoke --event - > ${file}"
+        println "Running command: ${command}"
+        exec {
+            executable 'bash'
+            args '-c', command
+        }
+        def expectedOutput = '{"message":"Received message: hello world"}'
+        def actualOutput = file.text.trim()
+        println actualOutput
+        if (!expectedOutput.equals(actualOutput)) {
+            throw new RuntimeException("Expected output:\n\t${expectedOutput}\nActual output:\n\t${actualOutput}")
+        }
+    }
+}
